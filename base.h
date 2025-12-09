@@ -16,10 +16,6 @@ typedef unsigned short u16;
 typedef char i8;
 typedef short i16;
 
-inline void Panic(const string& message)
-{
-    cout << "Panic: " << message << std::endl;
-    exit(1);
-}
+string Int2Hex(int _value);
 
 #endif // __BASE_H

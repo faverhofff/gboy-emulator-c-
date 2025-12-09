@@ -15,20 +15,20 @@ public:
 private:
     MMU *mMmu;
 
-    u8 mRegA;
-    u8 mRegB;
-    u8 mRegC;
-    u8 mRegD;
-    u8 mRegE;
-    u8 mRegH;
-    u8 mRegL;
-    u16 mRegSP;
-    u16 mRegPC;
+    u8 mRegA{ 0 };
+    u8 mRegB{ 0 };
+    u8 mRegC{ 0 };
+    u8 mRegD{ 0 };
+    u8 mRegE{ 0 };
+    u8 mRegH{ 0 };
+    u8 mRegL{ 0 };
+    u16 mRegSP{ 0 };
+    u16 mRegPC{ 0 };
 
-    bool mFlagZ;
-    bool mFlagN;
-    bool mFlagH;
-    bool mFlagC;
+    bool mFlagZ{ false };
+    bool mFlagN{ false };
+    bool mFlagH{ false };
+    bool mFlagC{ false };
 };
 
 #endif // _CPU_H

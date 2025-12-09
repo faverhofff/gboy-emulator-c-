@@ -19,15 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\imgui\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="3rdparty\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="base.cpp" />
     <ClCompile Include="cpu.cpp" />
+    <ClCompile Include="debugger.cpp" />
     <ClCompile Include="gb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="memory_viewer.cpp" />
     <ClCompile Include="mmu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\imgui\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="3rdparty\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="3rdparty\imgui\imgui.h" />
     <ClInclude Include="base.h" />
     <ClInclude Include="cpu.h" />
+    <ClInclude Include="debugger.h" />
     <ClInclude Include="gb.h" />
+    <ClInclude Include="memory_viewer.h" />
     <ClInclude Include="mmu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -114,10 +129,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Projects\gboy-emulator-c++\3rdparty\imgui;C:\Projects\gboy-emulator-c++\3rdparty\SDL2-2.0.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Projects\gboy-emulator-c++\3rdparty\SDL2-2.0.4\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

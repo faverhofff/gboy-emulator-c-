@@ -13,10 +13,10 @@ MMU::MMU()
 
 bool MMU::LoadRoms(const string &_bootableRom, const string &_cartridge)
 {
-    std::ifstream bootable(_bootableRom, std::ios::binary);
+    ifstream bootable(_bootableRom, std::ios::binary);
     if (!bootable)
     {
-        std::cout << "Failed to open bootable ROM: " << _bootableRom << std::endl;
+        cout << "Failed to open bootable ROM: " << _bootableRom << std::endl;
         return false;
     }
 
@@ -27,35 +27,27 @@ bool MMU::LoadRoms(const string &_bootableRom, const string &_cartridge)
     return true;
 }
 
-void MMU::VirtualToPhysicalAddr(u16 _virtualAddress, u8*& _memory, u16& _physicalAddress) 
+u8* MMU::VirtualToPhysicalAddr(u16 _virtualAddress) 
 {
-    if (mBootRomEnabled && (_virtualAddress >= 0x0000) && (_virtualAddress <= 0x0100)) // Boot ROM area
+    if (mBootRomEnabled && (_virtualAddress >= 0x000) && (_virtualAddress <= 0x00FF)) // Boot ROM area
     {
-        _memory = &mBootableRom[0];
-        _physicalAddress = _virtualAddress;
-        return;
+        return &mBootableRom[_virtualAddress];
     }
 
     if ((_virtualAddress > 0x000) && (_virtualAddress <= 0x3FFF)) // ROM area
     {
-        _memory = mRom;
-        _physicalAddress = _virtualAddress;
-        return;
+        return &mRom[_virtualAddress];
     }
 
     if ((_virtualAddress >= 0x8000) && (_virtualAddress <= 0x9FFF)) // VRAM area
     {
-        _memory = &mVRam[0];
-        _physicalAddress = _virtualAddress - 0x8000;
-        return;
+        return &mVRam[_virtualAddress - 0x8000];
     }
 
     if ((_virtualAddress >= 0xC000) && (_virtualAddress <= 0xDFFF)) // RAM area
     {
-        _memory = &mRam[0];
-        _physicalAddress = _virtualAddress - 0xC000;
-        return;
+        return &mRam[_virtualAddress - 0xC000];
     } 
 
-    throw std::runtime_error("Invalid memory access at address: " + _virtualAddress);
+    throw runtime_error("Invalid memory access at address: " + Int2Hex(_virtualAddress));
 }

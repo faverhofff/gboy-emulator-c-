@@ -10,13 +10,21 @@ void CPU::Step()
 	switch(opcode)
 	{
 		case 0x31: // LD SP, nn
-			cout << mRegSP << "\n";
 			mRegSP = mMmu->ReadU16(mRegSP);
 			mRegPC += 2;
-			cout << "LD SP, " << mRegSP << "\n";
+			cout << "LD SP, " << Int2Hex(mRegSP) << "\n";
+			break;
+
+		case 0xAF: // XOR A
+			mRegA ^= mRegA;
+			mFlagZ = (mRegA == 0);
+			mFlagN = false;
+			mFlagH = false;
+			mFlagC = false;
+			cout << "XOR A\n";
 			break;
 
 		default:
-			throw std::runtime_error("opcode unknow " + opcode);
+			throw std::runtime_error("opcode unknow " + Int2Hex(opcode));
 	}
 }
