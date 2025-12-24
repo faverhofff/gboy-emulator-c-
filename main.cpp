@@ -3,8 +3,6 @@
 #include <imgui_impl_opengl2.h>
 #include <stdio.h>
 #include "base.h"
-#include "cpu.h"
-#include "mmu.h"
 #include "gb.h"
 #include <SDL.h>
 #include "debugger.h"
@@ -12,6 +10,10 @@
 
 int main(int argn, char *argv[]) 
 {
+
+    GB gb;
+    gb.PowerOn(argv[1], argv[2]);
+
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         printf("Error: %s\n", SDL_GetError());
@@ -25,7 +27,7 @@ int main(int argn, char *argv[])
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
     bool done = false;
-    Debugger debugger;
+    Debugger debugger(gb);
 
     while (!done)
     {
@@ -48,10 +50,6 @@ int main(int argn, char *argv[])
     }
 
     SDL_Quit();
-
-    // GB gb;
-
-    // gb.PowerOn(argv[1], argv[2]);
 
     return 0;
 }

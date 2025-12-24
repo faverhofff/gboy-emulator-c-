@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define S8KB (1024 * 8)
+// #define S8KB (1024 * 8)
 
 typedef unsigned char  u8;
 typedef unsigned short u16;

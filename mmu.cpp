@@ -5,10 +5,17 @@
 
 MMU::MMU()
 {
-    mRom = nullptr;
-    memset(mRam, 0, S8KB);
-    memset(mVRam, 0, S8KB);
-    memset(mBootableRom, 0, 256);
+    fill_n(mRam, RamSize, 0);
+    fill_n(mVRam, VRamSize, 0);
+    fill_n(mBootableRom, 256, 0);
+}
+
+MMU::~MMU()
+{
+    if (mRom != nullptr)
+    {
+        delete[] mRom;
+    }
 }
 
 bool MMU::LoadRoms(const string &_bootableRom, const string &_cartridge)
@@ -21,8 +28,21 @@ bool MMU::LoadRoms(const string &_bootableRom, const string &_cartridge)
     }
 
     bootable.read((char*)mBootableRom, 256);
-
     bootable.close();
+
+    ifstream cartridge(_cartridge, std::ios::binary);
+    if (!cartridge)
+    {
+        cout << "Failed to open cartridge ROM: " << _cartridge << std::endl;
+        return false;
+    }
+    cartridge.seekg(0, cartridge.end);
+    mRomSize = (int)cartridge.tellg();
+    cartridge.seekg(0, cartridge.beg);
+
+    mRom = new u8[mRomSize];
+    cartridge.read((char*)mRom, mRomSize);
+    cartridge.close();
 
     return true;
 }

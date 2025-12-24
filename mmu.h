@@ -9,6 +9,11 @@ class MMU
 {
 public:
     MMU();
+    ~MMU();
+
+    static const int RamSize = 1024 * 8;
+    static const int VRamSize = 1024 * 8;
+    static const int BootRomSize = 256;
 
     inline void WriteU8(u16 _address, u8 _value)
     {
@@ -30,15 +35,21 @@ public:
         return *(u16*)VirtualToPhysicalAddr(_address);
     }
 
+    const u8* GetBootableRom() const { return mBootableRom; }
+    const u8* GetRom() const { return mRom; }
+
     bool LoadRoms(const string& _bootableRom, const string& filepath);
+
+    int GetRomSize() const { return mRomSize; }
 
 private:
     u8* VirtualToPhysicalAddr(u16 _virtualAddress);
 
-    u8 mRam[S8KB]; // 8KB RAM
-    u8 mVRam[S8KB]; // 8KB VRAM
+    u8 mRam[RamSize]; // 8KB RAM
+    u8 mVRam[VRamSize]; // 8KB VRAM
     u8* mRom{ nullptr };
-    u8 mBootableRom[256]; // 256B Bootable ROM  
+    u8 mBootableRom[BootRomSize]; // 256B Bootable ROM  
+    int mRomSize{ 0 };
     bool mBootRomEnabled = true;
 };
 

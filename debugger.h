@@ -2,15 +2,16 @@
 #include <imgui_impl_sdl2.h>
 #include <SDL_gesture.h>
 #include "memory_viewer.h"
+//#include "gb.h"
 #ifndef _DEBUGGER_H
 #define _DEBUGGER_H
 
-
+class GB;
 
 class Debugger
 {
 public:
-    Debugger();
+    Debugger(GB& _gb);
     ~Debugger();
 
     void HandleEvent(SDL_Event& _event);

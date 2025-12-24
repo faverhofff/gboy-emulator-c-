@@ -2,11 +2,11 @@
 #include <SDL_opengl.h>
 #include "base.h"
 #include "debugger.h"
+#include "gb.h"
 #include <imgui_impl_opengl2.h>
 #include "memory_viewer.h"
 
-
-Debugger::Debugger()
+Debugger::Debugger(GB& gb): mMemoryViewer(gb.GetMmu())
 {
     float main_scale = 1.0f; // Placeholder for content scale retrieval
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);

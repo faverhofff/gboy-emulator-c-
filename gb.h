@@ -11,6 +11,7 @@ class GB
 {
 public:
     void PowerOn(const std::string& _bootableRom, const std::string& _cartridgePath);
+    const MMU& GetMmu() const { return mMmu; }
 
 private:
     CPU mCpu;

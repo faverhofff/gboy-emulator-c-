@@ -42,6 +42,7 @@
     <ClInclude Include="cpu.h" />
     <ClInclude Include="debugger.h" />
     <ClInclude Include="gb.h" />
+    <ClInclude Include="imgui_memory_editor.h" />
     <ClInclude Include="memory_viewer.h" />
     <ClInclude Include="mmu.h" />
   </ItemGroup>
