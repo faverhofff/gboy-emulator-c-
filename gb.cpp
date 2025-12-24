@@ -8,7 +8,6 @@ void GB::PowerOn(const string &_bootableRom, const string& _cartridgePath)
     try
     {
         mMmu.LoadRoms(_bootableRom, _cartridgePath);
-        mCpu.SetMmu(&mMmu);
 
         while (true)
         {

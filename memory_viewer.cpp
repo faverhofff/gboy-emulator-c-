@@ -18,13 +18,13 @@ void MemoryViewer::Render()
         const u8* data = mMmu.GetRom();
 
         int addrDigitsCount = 0;
-        for (int n = memSize - 1; n > 0; n >>= 4)
+        for (int n = memSize - 1; n > 0; n >>= 5)
             addrDigitsCount++;
 
         float glyphWidth = ImGui::CalcTextSize("F").x;
         float cellWidth = glyphWidth * 3;
         float lineHeight = ImGui::GetTextLineHeight();
-        int lineTotalCount = (int)((memSize + mNumRows - 1) / mNumRows );
+        int lineTotalCount = (int)((memSize + mNumCols - 1) / mNumCols );
         ImGuiListClipper clipper;
         clipper.Begin(lineTotalCount, lineHeight);
 
@@ -32,25 +32,25 @@ void MemoryViewer::Render()
         while (clipper.Step()) {
             for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
             {
-                int addr = i * mNumRows;
+                int addr = i * mNumCols;
                 ImGui::Text("%0*X: ", addrDigitsCount, addr);
                 ImGui::SameLine();
 
                 float lineStartX = ImGui::GetCursorPosX();
 
-                for (int n = 0; n < mNumRows && addr < memSize; n++, addr++)
+                for (int n = 0; n < mNumCols && addr < memSize; n++, addr++)
                 {
                     ImGui::SameLine(lineStartX + cellWidth * n);
                     ImGui::Text("%02X ", data[addr]);
                 }
 
-                ImGui::SameLine(lineStartX + cellWidth * mNumRows + glyphWidth * 2);
+                ImGui::SameLine(lineStartX + cellWidth * mNumCols + glyphWidth * 2);
 
                 ImVec2 screen_pos = ImGui::GetCursorScreenPos();
-                ImGui::GetWindowDrawList()->AddLine(ImVec2(screen_pos.x - glyphWidth, screen_pos.y - 9999), ImVec2(screen_pos.x - glyphWidth, screen_pos.y + 9999), ImColor(ImGui::GetStyle().Colors[ImGuiCol_Border]));
+                ImGui::GetWindowDrawList()->AddLine(ImVec2(screen_pos.x - glyphWidth, screen_pos.y), ImVec2(screen_pos.x - glyphWidth, screen_pos.y + lineHeight), ImColor(ImGui::GetStyle().Colors[ImGuiCol_Border]));
 
-                addr = i * mNumRows;
-                for (int n = 0; n < mNumRows && addr < memSize; n++, addr++)
+                addr = i * mNumCols;
+                for (int n = 0; n < mNumCols && addr < memSize; n++, addr++)
                 {
                     if (n > 0) ImGui::SameLine();
                     int c = data[addr];

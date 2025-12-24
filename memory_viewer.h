@@ -14,7 +14,7 @@ public:
 private:
     MemoryEditor mMemoryeditor;
 
-    const int mNumRows = 16;
+    //const int mNumRows = 32;
     static const int mNumCols = 32;
 
     const MMU &mMmu;
